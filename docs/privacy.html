@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Finance Tracker</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    max-width: 720px; margin: 0 auto; padding: 48px 22px 80px;
+    color: #e8ecff; background: #0b1020;
+  }
+  h1, h2 { font-family: "Space Grotesk", system-ui, sans-serif; line-height: 1.25; }
+  h1 { font-size: 1.7rem; margin: 0 0 6px; }
+  h2 { font-size: 1.15rem; margin: 32px 0 8px; }
+  .meta { color: #8b93b8; font-size: 0.9rem; margin-bottom: 8px; }
+  a { color: #9db4ff; }
+  code { background: #161c34; padding: 1px 5px; border-radius: 4px; font-size: 0.9em; }
+  ul { padding-left: 20px; }
+  li { margin: 4px 0; }
+  footer { margin-top: 40px; color: #8b93b8; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<h1>Privacy Policy</h1>
+<p class="meta">Finance Tracker &middot; last updated 7 September 2026</p>
+
+<p>
+  Finance Tracker is a personal, self-hosted budgeting tool built and run by one
+  individual for their own private use. It is not a company, not a product, and
+  is not offered to the public. This page explains what it does with data.
+</p>
+
+<h2>Who runs it</h2>
+<p>
+  A single private individual (the "operator"), for their own personal finances
+  only. There are no other users, no staff, and no organisation behind it.
+</p>
+
+<h2>What data is involved</h2>
+<ul>
+  <li>
+    <strong>Bank account information</strong> retrieved through Enable Banking's
+    API with the operator's explicit consent: account details (name, IBAN,
+    currency), balances, and transaction history.
+  </li>
+  <li>
+    Access is <strong>read-only</strong>. The application cannot and does not
+    initiate payments or move money.
+  </li>
+  <li>
+    No data is collected from anyone other than the operator's own bank
+    accounts. There are no visitor accounts, sign-ups, or forms.
+  </li>
+</ul>
+
+<h2>Where it is stored</h2>
+<ul>
+  <li>
+    All retrieved data is written to a local <code>SQLite</code> database file on
+    the operator's own machine.
+  </li>
+  <li>
+    Nothing is uploaded to a hosted server, shared with third parties, sold, or
+    used for advertising. There is no analytics, tracking, or telemetry.
+  </li>
+  <li>
+    The private key and database file are excluded from version control and are
+    never published.
+  </li>
+</ul>
+
+<h2>Third parties</h2>
+<p>
+  The only third party is <a href="https://enablebanking.com" rel="noopener">Enable
+  Banking</a>, which brokers the regulated connection to the bank. Their handling
+  of data is governed by their own privacy policy and by the operator's bank.
+  This page covers a private client that talks to that API.
+</p>
+
+<h2>Retention and revoking access</h2>
+<ul>
+  <li>
+    Data stays in the local database until the operator deletes it. There is no
+    fixed retention period because there is no service operating it.
+  </li>
+  <li>
+    Consent to access the bank data can be withdrawn at any time through Enable
+    Banking or directly with the bank, which stops any further access.
+  </li>
+</ul>
+
+<h2>Changes</h2>
+<p>
+  If this tool's behaviour changes, this page will be updated with a new date
+  above.
+</p>
+
+<h2>Contact</h2>
+<p>
+  Questions about this policy: <em>[add your contact email here before submitting]</em>.
+</p>
+
+<footer>
+  <a href="./">Home</a> &middot; <a href="./terms.html">Terms of Use</a>
+</footer>
+
+</body>
+</html>

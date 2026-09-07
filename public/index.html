@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Finance Tracker</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>💶</text></svg>" />
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <span class="glow glow-a"></span>
+    <span class="glow glow-b"></span>
+    <span class="glow glow-c"></span>
+  </div>
+
+  <div class="app">
+    <header class="topbar">
+      <button id="home-link" class="greeting" title="Back to dashboard">
+        <span class="greeting-sub">Welcome</span>
+        <span class="greeting-name">Cian</span>
+      </button>
+      <nav class="topbar-actions">
+        <button id="nav-add" class="pill pill-primary">Add Entry</button>
+        <button id="nav-entries" class="pill">View Entries</button>
+        <button id="nav-recurring" class="pill">Monthly</button>
+      </nav>
+    </header>
+
+    <!-- ============ DASHBOARD ============ -->
+    <section id="view-dashboard" class="view">
+      <div class="balance-hero reveal" style="--i:0">
+        <span class="hero-label">Current Balance</span>
+        <span id="balance-total" class="hero-amount" data-value="0">€0.00</span>
+        <span id="balance-sub" class="hero-sub"></span>
+      </div>
+
+      <div class="account-row">
+        <article class="acct-card reveal" style="--i:1">
+          <span class="acct-name"><i class="dot"></i>Cash</span>
+          <span id="acct-Cash" class="acct-amount" data-value="0">€0.00</span>
+        </article>
+        <article class="acct-card reveal" style="--i:2">
+          <span class="acct-name"><i class="dot"></i>Revolut</span>
+          <span id="acct-Revolut" class="acct-amount" data-value="0">€0.00</span>
+        </article>
+        <article class="acct-card reveal" style="--i:3">
+          <span class="acct-name"><i class="dot"></i>Bank</span>
+          <span id="acct-Bank" class="acct-amount" data-value="0">€0.00</span>
+        </article>
+      </div>
+
+      <div class="dash-head reveal" style="--i:4">
+        <h2>Dashboard</h2>
+        <div class="segmented" id="dash-period" data-value="week">
+          <span class="seg-thumb" aria-hidden="true"></span>
+          <button type="button" data-val="week" class="active">Week</button>
+          <button type="button" data-val="month">Month</button>
+          <button type="button" data-val="year">Year</button>
+        </div>
+      </div>
+      <p id="dash-range" class="range reveal" style="--i:5"></p>
+
+      <div id="dash-body">
+        <div class="stat-grid">
+          <article class="card stat-card reveal" style="--i:6">
+            <h3>Income</h3>
+            <div id="stat-income" class="stat-value" data-value="0">€0.00</div>
+            <div id="cmp-income" class="cmp"></div>
+          </article>
+          <article class="card stat-card reveal" style="--i:7">
+            <h3>Expenses</h3>
+            <div id="stat-expense" class="stat-value" data-value="0">€0.00</div>
+            <div id="cmp-expense" class="cmp"></div>
+          </article>
+          <article class="card stat-card reveal" style="--i:8">
+            <h3>Net</h3>
+            <div id="stat-net" class="stat-value" data-value="0">€0.00</div>
+            <div id="cmp-net" class="cmp"></div>
+          </article>
+        </div>
+
+        <div class="chart-grid">
+          <article class="card reveal" style="--i:9">
+            <h3>Expenses by category</h3>
+            <div id="chart-category" class="barchart"></div>
+          </article>
+          <article class="card reveal" style="--i:10">
+            <h3>By account <span class="sub">income − expense this period</span></h3>
+            <div id="chart-account" class="barchart"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ENTRIES ============ -->
+    <section id="view-entries" class="view" hidden>
+      <div class="view-head">
+        <h2>Entries</h2>
+      </div>
+      <div class="card filters">
+        <label class="field"><span>From</span><input id="f-from" type="date" /></label>
+        <label class="field"><span>To</span><input id="f-to" type="date" /></label>
+        <label class="field"><span>Type</span>
+          <select id="f-type"><option value="">Any</option><option value="income">Income</option><option value="expense">Expense</option></select>
+        </label>
+        <label class="field"><span>Account</span>
+          <select id="f-account"><option value="">Any</option><option>Cash</option><option>Revolut</option><option>Bank</option></select>
+        </label>
+        <label class="field"><span>Category</span>
+          <select id="f-category"><option value="">Any</option><option>Savings</option><option>Investments</option><option>Discretionary</option><option>Income</option></select>
+        </label>
+        <button id="f-clear" type="button" class="pill">Clear</button>
+      </div>
+      <div class="card table-card">
+        <div class="table-wrap">
+          <table id="entries-table">
+            <thead><tr>
+              <th>Date</th><th>Type</th><th class="num">Amount</th><th>Account</th><th>Category</th><th>Title</th><th></th><th></th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p id="entries-empty" class="empty" hidden>No entries match.</p>
+      </div>
+    </section>
+
+    <!-- ============ MONTHLY EXPENDITURES ============ -->
+    <section id="view-recurring" class="view" hidden>
+      <div class="view-head">
+        <h2>Monthly Expenditures</h2>
+      </div>
+      <div class="card recurring-summary">
+        <div>
+          <span class="hero-label">True monthly cost of recurring expenses</span>
+          <span id="recurring-monthly" class="acct-amount" data-value="0">€0.00</span>
+        </div>
+        <p class="hint">Weekly items counted as ×52/12, yearly as ÷12.</p>
+      </div>
+      <div class="card table-card">
+        <div class="table-wrap">
+          <table id="recurring-table">
+            <thead><tr>
+              <th>Title</th><th class="num">Amount</th><th>Every</th><th class="num">Per month</th><th>Account</th><th>Category</th><th>Next due</th><th>Active</th><th></th><th></th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p id="recurring-empty" class="empty" hidden>No recurring entries yet. Tick “Repeats” when adding one.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ ADD ENTRY MODAL ============ -->
+  <dialog id="add-modal" class="glass-dialog">
+    <form id="log-form" autocomplete="off">
+      <h2>Add entry</h2>
+      <div class="log-row">
+        <label class="field amount-field">
+          <span>Amount (€)</span>
+          <input id="log-amount" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00" required />
+        </label>
+        <div class="field">
+          <span>Type</span>
+          <div class="segmented compact" id="log-type" data-value="expense">
+            <button type="button" data-val="expense" class="active">Expense</button>
+            <button type="button" data-val="income">Income</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span>Account</span>
+        <div class="segmented compact" id="log-account" data-value="">
+          <button type="button" data-val="Cash">Cash</button>
+          <button type="button" data-val="Revolut">Revolut</button>
+          <button type="button" data-val="Bank">Bank</button>
+        </div>
+      </div>
+
+      <div class="field" id="log-category-field">
+        <span>Category</span>
+        <div class="segmented compact" id="log-category" data-value="">
+          <button type="button" data-val="Savings">Savings</button>
+          <button type="button" data-val="Investments">Investments</button>
+          <button type="button" data-val="Discretionary">Discretionary</button>
+        </div>
+      </div>
+
+      <div class="log-row">
+        <label class="field">
+          <span>Date</span>
+          <input id="log-date" type="date" />
+        </label>
+        <label class="field grow">
+          <span>Title <em>(optional)</em></span>
+          <input id="log-title" type="text" placeholder="e.g. Groceries" />
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Detail <em>(optional)</em></span>
+        <input id="log-detail" type="text" placeholder="note" />
+      </label>
+
+      <div class="recurring-inline">
+        <label class="checkbox"><input id="log-recurring" type="checkbox" /> Repeats</label>
+        <select id="log-interval" disabled>
+          <option value="weekly">every week</option>
+          <option value="monthly" selected>every month</option>
+          <option value="yearly">every year</option>
+        </select>
+      </div>
+      <p class="hint">A repeating entry is suggested for you each period from the date above.</p>
+
+      <p id="log-msg" class="msg" hidden></p>
+      <menu>
+        <button type="button" id="log-cancel" class="pill">Cancel</button>
+        <button type="submit" class="pill pill-primary">Log it</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <!-- ============ RECURRING DUE MODAL ============ -->
+  <dialog id="due-modal" class="glass-dialog">
+    <form method="dialog">
+      <h2>Recurring entries are due</h2>
+      <p class="hint">Tick the ones to add now. Unticked dates won’t be asked again.</p>
+      <div id="due-list" class="due-list"></div>
+      <menu>
+        <button value="cancel" class="pill">Not now</button>
+        <button id="due-confirm" value="confirm" class="pill pill-primary" autofocus>Add selected</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <!-- ============ EDIT MODAL ============ -->
+  <dialog id="edit-modal" class="glass-dialog">
+    <form id="edit-form" method="dialog">
+      <h2 id="edit-title">Edit</h2>
+      <div id="edit-fields"></div>
+      <menu>
+        <button value="cancel" type="button" id="edit-cancel" class="pill">Cancel</button>
+        <button value="save" class="pill pill-primary">Save</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

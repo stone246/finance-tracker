@@ -1,0 +1,19 @@
+# --- secrets: never commit ---
+secrets/
+*.pem
+*.key
+.env
+.env.*
+eb-config.json
+
+# --- local data ---
+node_modules/
+finance.db
+finance.db-wal
+finance.db-shm
+*.db
+
+# --- runtime / logs ---
+server.log
+*.log
+.backup/
